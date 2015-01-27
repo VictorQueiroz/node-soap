@@ -89,4 +89,4 @@ SOAPClient.prototype.end = function () {
 	this.req.end();
 };
 
-module.exports = SOAPClient;
+exports.SOAPClient = SOAPClient;
