@@ -1,7 +1,7 @@
 # node-soap
 
 ```js
-var SOAPClient = require('node-soap');
+var SOAPClient = require('node-soap').SOAPClient;
 
 var client = SOAPClient({
 	hostname: 'localhost',
