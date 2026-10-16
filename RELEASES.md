@@ -55,6 +55,9 @@ The published 1.0.1 tarball integrity matches the locally tested artifact:
   declarations and reject invalid options, commands, and calls without `new`.
 - CI checks runtime coverage, declarations, and packaging on Node.js 24 across
   Linux, macOS, and Windows.
+- [CI run 38951902897](https://github.com/VictorQueiroz/node-soap/actions/runs/38951902897)
+  passed all 20 tests, 100% coverage, declaration checks, and packaging on all
+  three operating systems. CI actions also use the Node.js 24 runtime.
 - Package contents include compiled JavaScript, declarations, maps, and their
   TypeScript source. The artifact is tested from a separate consumer installation
   and inspected for confidential content before publication.
