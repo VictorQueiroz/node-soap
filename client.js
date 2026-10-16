@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
 var http = require('http');
 var defaults = {
 	port: 7878,
@@ -8,10 +7,18 @@ var defaults = {
 };
 
 function SOAPClient (options, fn) {
-	fn = this.fn = fn;
-	options = this.options = _.extend({}, defaults, options);
+	if (!(this instanceof SOAPClient)) {
+		return new SOAPClient(options, fn);
+	}
 
-	var deferred;
+	this.fn = fn;
+	this.options = { port: defaults.port, method: defaults.method };
+	// Like _.extend, copy enumerable inherited properties as well as own ones.
+	if (options) {
+		for (var key in options) {
+			this.options[key] = options[key];
+		}
+	}
 
 	this.namespaces = '';
 	this.methods = '';
@@ -89,4 +96,6 @@ SOAPClient.prototype.end = function () {
 	this.req.end();
 };
 
-exports.SOAPClient = SOAPClient;
+// Preserve both the published 1.0.0 export and the repository's named export.
+module.exports = SOAPClient;
+SOAPClient.SOAPClient = SOAPClient;
