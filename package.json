@@ -1,17 +1,32 @@
 {
   "name": "node-soap",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A small HTTP SOAP client with Basic authentication",
-  "main": "client.js",
-  "types": "client.d.ts",
-  "files": ["client.js", "client.d.ts", "CHANGELOG.md", "RELEASES.md"],
+  "type": "module",
+  "main": "dist/client.js",
+  "types": "dist/client.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "src", "CHANGELOG.md", "RELEASES.md"],
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VictorQueiroz/node-soap.git"
   },
   "scripts": {
-    "test": "node test/run.js",
-    "test:types": "tsc -p test/types/tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/client.test.js",
+    "test:coverage": "npm run build && node --experimental-test-coverage --test-coverage-include=dist/client.js --test-coverage-lines=100 --test-coverage-branches=100 --test-coverage-functions=100 --test test/client.test.js",
+    "test:types": "npm run build && tsc -p test/types/tsconfig.json",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run test:coverage && npm run test:types"
   },
   "author": "",
   "license": "MIT",

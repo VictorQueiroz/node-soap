@@ -30,8 +30,31 @@ exports and retains both commits in history.
 - All 15 runtime tests pass locally on Node.js 24.21.0. V8 coverage reports 100%
   statements, branches, functions, and lines for `client.js`. Both runtime source
   and the test runner also pass an ECMAScript 3 syntax parse.
-- CI runs runtime tests on Node.js 0.8.28, 0.10.48, 0.12.18, and 24.x; declaration
-  checks use Node.js 24. Old x64 binaries cannot execute on the development ARM
-  Mac, so native legacy runtime results come from Linux CI.
+- [CI run 38950585310](https://github.com/VictorQueiroz/node-soap/actions/runs/38950585310)
+  passed all 15 runtime tests on Node.js 0.8.28, 0.10.48, 0.12.18, and 24.x, plus
+  declaration checks. Old x64 binaries cannot execute on the development ARM Mac,
+  so native legacy runtime results come from Linux CI.
 - Release artifacts use an explicit package file allowlist and are inspected for
   confidential content before publication.
+
+The release commit is `b670ac05ace3e9e5441113ff5c57ea7ea70018bd`, tagged `v1.0.1`.
+The published 1.0.1 tarball integrity matches the locally tested artifact:
+`sha512-KXMlBuYQemd3A21bkJT9cVKbZLm5k+wYk618XKXX6tRzFYNx62i7AdxoM5wCytDVex1nabQkWzXtYtr9YMgo6A==`.
+
+## 2.0.0 validation
+
+- Source is strict TypeScript compiled with TypeScript 7.0.2, `NodeNext` module
+  resolution, and an ES2024 target. Runtime entry points are ESM and declare
+  Node.js `>=24.0.0`.
+- All 20 tests pass locally on Node.js 24.21.0. Node's coverage runner enforces
+  100% lines, branches, and functions for the compiled runtime.
+- Tests retain exact legacy envelope/raw XML and option-merging checks, exercise
+  every public method, and cover repeated HTTP requests, streamed non-200
+  responses, Basic authentication, cancellation, and real transport errors.
+- TypeScript consumer checks resolve the package exports and generated
+  declarations and reject invalid options, commands, and calls without `new`.
+- CI checks runtime coverage, declarations, and packaging on Node.js 24 across
+  Linux, macOS, and Windows.
+- Package contents include compiled JavaScript, declarations, maps, and their
+  TypeScript source. The artifact is tested from a separate consumer installation
+  and inspected for confidential content before publication.

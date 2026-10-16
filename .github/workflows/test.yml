@@ -4,19 +4,11 @@ permissions:
   contents: read
 jobs:
   runtime:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        node: ['0.8.28', '0.10.48', '0.12.18', '24.x']
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-      - run: node test/run.js
-  declarations:
-    runs-on: ubuntu-22.04
+        os: [ubuntu-24.04, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,4 +16,6 @@ jobs:
           node-version: '24.x'
           cache: npm
       - run: npm ci
+      - run: npm run test:coverage
       - run: npm run test:types
+      - run: npm pack --dry-run
